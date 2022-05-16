@@ -29,7 +29,12 @@ const Treatment = ({ treatment, setTreatment, date }) => {
         })
             .then(res => res.json())
             .then(data => {
-                toast('Booking successfully')
+                if(data.success){
+                    toast(`Appointment is set, ${formatedDate} at ${slot}`)
+                }
+                else{
+                    toast.error(`Already have and Appointment, ${data.booking?.date} at ${data.booking?.slot}`)
+                }
                 //close modal
                 setTreatment(null)
             })

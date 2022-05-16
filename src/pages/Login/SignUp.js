@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
@@ -13,14 +13,16 @@ const SignUp = () => {
         loading,
         error,
       ] = useCreateUserWithEmailAndPassword(auth);
+      const [updateProfile, updating] = useUpdateProfile(auth);
       const [userToken]=useToken(user);
       if(userToken){
         navigate('/')
       }
     const { register, formState: { errors }, handleSubmit } = useForm();
     
-    const onSubmit = data => {
-        createUserWithEmailAndPassword(data.email,data.password)
+    const onSubmit = async data => {
+        await createUserWithEmailAndPassword(data.email,data.password)
+        await updateProfile({displayName:data.name})
     };
     return (
         <div className='flex justify-center items-center'>

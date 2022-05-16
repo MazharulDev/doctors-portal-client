@@ -5,9 +5,9 @@ import Treatment from './Treatment';
 
 const Services = ({ date }) => {
     const [service,setService]=useState([]);
-    const [treatment,setTreatment]=useState(null)
+    const [treatment,setTreatment]=useState(null);
     useEffect(()=>{
-        fetch("http://localhost:5000/service")
+        fetch(`http://localhost:5000/service`)
         .then(res=>res.json())
         .then(data=>setService(data))
     },[])
